@@ -17,7 +17,8 @@ After Clone This's repositories
     MYSQLRCM_DB=
     MYSQLRCM_PORT=3306
     2.Create Your Folder TO save .sql,Example in this project's The same Directory Create Folder backupBd0251 And 2 sub folder
-        2.1.cpareport 2.2.mysqleclaim
+        2.1.cpareport 
+        2.2.mysqleclaim
     3.npm i 
     4.Run this project with pm2 http://pm2.keymetrics.io OR RUN THIS COMMAND   npm install pm2 -g
     5.pm2 start index.js -n backupdb -i 1
