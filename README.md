@@ -20,8 +20,19 @@ After Clone This's repositories
         2.1.cpareport 
         2.2.mysqleclaim
     3.npm i 
-    4.Run this project with pm2 http://pm2.keymetrics.io OR RUN THIS COMMAND   npm install pm2 -g
-    5.pm2 start index.js -n backupdb -i 1
-    6.pm2 save
-
+    4.npm start
+    
+    ########## IF YOU WANT TO RUN THIS BACKUP AUTOMATICALLY EVERY START PC Install Pm2 And Set them See Below. ###########
+    
+    1.Run this project with pm2  RUN THIS COMMAND   npm install pm2 -g
+    2.pm2 start index.js -n backupdb -i 1
+    3.pm2 startup                    auto start program
+    4.pm2 list                       For check program is running with pm2
+    5.pm2 save                       All information to use at the start  
+    
+    if you want to restart you pm2 every day at the morning youcan use this Command 
+    change time what your want Example 00.00 AM.
+    pm2 restart app --cron-restart="0 0 * * *"
+    see more https://pm2.keymetrics.io/docs/usage/restart-strategies/ AND http://pm2.keymetrics.io
+ 
 
