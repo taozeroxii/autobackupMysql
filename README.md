@@ -22,5 +22,6 @@ After Clone This's repositories
     3.npm i 
     4.Run this project with pm2 http://pm2.keymetrics.io OR RUN THIS COMMAND   npm install pm2 -g
     5.pm2 start index.js -n backupdb -i 1
+    6.pm2 save
 
 
