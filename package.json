@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "base64-img": "^1.0.4",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "express-validator": "^6.4.0",
+    "helmet": "^3.22.1",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1",
+    "mysqldump": "^3.2.0",
+    "node-cron": "^2.0.3",
+    "nodemon": "^2.0.2",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
+}
