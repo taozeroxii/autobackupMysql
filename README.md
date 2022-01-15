@@ -16,7 +16,6 @@ After Clone This's repositories
     MYSQLRCM_PASSWORD=
     MYSQLRCM_DB=
     MYSQLRCM_PORT=3306
-
     2.npm i 
     3.Run this project with pm2 http://pm2.keymetrics.io OR RUN THIS COMMAND   npm install pm2 -g
     4.pm2 start index.js -n backupdb -i 1
