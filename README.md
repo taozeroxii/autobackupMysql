@@ -33,6 +33,8 @@ After Clone This's repositories
     if you want to restart you pm2 every day at the morning youcan use this Command 
     change time what your want Example 00.00 AM.
     pm2 restart app --cron-restart="0 0 * * *"
-    see more https://pm2.keymetrics.io/docs/usage/restart-strategies/ AND http://pm2.keymetrics.io
+see more 
+- https://pm2.keymetrics.io/docs/usage/restart-strategies/ 
+- http://pm2.keymetrics.io
  
 
