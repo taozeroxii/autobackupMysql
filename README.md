@@ -32,7 +32,7 @@ This's Example To Connect  2database Mysql For Dump Data and stucture Sql
     4.pm2 list                       
     5.pm2 save                       
     
-if you want to restart you pm2 every day at the morning youcan use this Command 
+if you want to restart you pm2 every day at  youcan use this Command 
 change time what your want Example 00.00 AM.
 
     pm2 restart app --cron-restart="0 0 * * *"
