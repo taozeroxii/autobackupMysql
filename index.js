@@ -3,6 +3,8 @@ const server = express(); //use express
 require('dotenv').config();//config ค่าใน env ไฟล์
 const bodyParser = require("body-parser"); // paser data json format
 const mysqldump = require("mysqldump"); //เรียกใช้ mysqldump
+var fs = require('fs');
+
 
 //ปกป้อง HTTP HEADER ด้วย Helmet
 var helmet = require("helmet");
@@ -20,8 +22,25 @@ const cron = require("node-cron"); // เรียกใช้ node-cron จา�
 const moment = require("moment");
 
 cron.schedule(JOB_SCHEDULE, () => {
+
+  function deleteOldfile(filePathsql){ // function delete file
+    try {
+      fs.unlinkSync(filePathsql);// ลบไฟล์ backup ตัวเดิมออก 
+      console.log('successfully deleted '+filePathsql);
+    }catch(error){
+    console.error('there was an error:', error.message);
+   }
+  }
+
   //backup database mysql dump every day at midnight.
   console.log(`Runtime ${moment().format("YYYYMMDD")}`);
+  var filePathsql1 = `./backupBd0251/cpareport/report${moment().day(-3).format("YYYYMMDD")}.sql`; 
+  var filePathsql2 = `./backupBd0251/mysqleclaim/bkrcm-${moment().day(-3).format("YYYYMMDD")}.sql`; 
+
+  deleteOldfile(filePathsql1);
+  deleteOldfile(filePathsql2);  
+
+
   mysqldump({
     connection: {
       host: process.env.MYSQLRP_HOST,
@@ -45,6 +64,7 @@ cron.schedule(JOB_SCHEDULE, () => {
     //Your directory to save sql file
     dumpToFile: `./backupBd0251/mysqleclaim/bkrcm-${moment().format("YYYYMMDD")}.sql`,
   });
+
 
 });
 
