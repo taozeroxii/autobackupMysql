@@ -31,15 +31,17 @@ cron.schedule(JOB_SCHEDULE, () => {
     console.error('there was an error:', error.message);
    }
   }
-
-  //backup database mysql dump every day at midnight.
+  function getLastWeeksDate() {// function getdate of lastweek 
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+  }
+  
+  // backup database mysql dump every day at midnight.
   console.log(`Runtime ${moment().format("YYYYMMDD")}`);
-  var filePathsql1 = `./backupBd0251/cpareport/report${moment().day(-3).format("YYYYMMDD")}.sql`; 
-  var filePathsql2 = `./backupBd0251/mysqleclaim/bkrcm-${moment().day(-3).format("YYYYMMDD")}.sql`; 
-
+  var filePathsql1 = `./backupBd0251/cpareport/report${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
+  var filePathsql2 = `./backupBd0251/mysqleclaim/bkrcm-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
   deleteOldfile(filePathsql1);
   deleteOldfile(filePathsql2);  
-
 
   mysqldump({
     connection: {
@@ -65,12 +67,11 @@ cron.schedule(JOB_SCHEDULE, () => {
     dumpToFile: `./backupBd0251/mysqleclaim/bkrcm-${moment().format("YYYYMMDD")}.sql`,
   });
 
-
 });
 
 server.get("*", (req, res) => {
   //res.sendFile(`${__dirname}/dist/index.html`)
-  res.end(`backend server is started api insert data iview`);
+  res.end(`Backup cpareport eclaim offline is started !!`);
 });
 
 server.listen(PORT, () => console.log(`sever started port: ${PORT} . `));
