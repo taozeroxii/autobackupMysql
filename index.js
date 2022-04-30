@@ -17,12 +17,14 @@ server.use(bodyParser.json({ limit: "500MB" }));
 //cornjob
 const config = require("./configs"); //config port and jobschdue
 const { PORT } = config; // เรียกใช้ port จากไฟล์config
-const { JOB_SCHEDULE } = config; // เรียกใช้ JOB_SCHEDULE จากไฟล์config
+const { JOB_SCHEDULE,JOB_SCHEDULE2 } = config; // เรียกใช้ JOB_SCHEDULE จากไฟล์config
 const cron = require("node-cron"); // เรียกใช้ node-cron จากไฟล์config
 const moment = require("moment");
 
-cron.schedule(JOB_SCHEDULE, () => {
 
+
+
+cron.schedule(JOB_SCHEDULE, () => { // autobackup report และ rcm ทุกตี 1 ของวัน
   function deleteOldfile(filePathsql){ // function delete file
     try {
       fs.unlinkSync(filePathsql);// ลบไฟล์ backup ตัวเดิมออก 
@@ -36,10 +38,9 @@ cron.schedule(JOB_SCHEDULE, () => {
     return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
   }
   
-  // backup database mysql dump every day at midnight.
   console.log(`Runtime ${moment().format("YYYYMMDD")}`);
-  var filePathsql1 = `./backupBd0251/cpareport/report${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
-  var filePathsql2 = `./backupBd0251/mysqleclaim/bkrcm-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
+  var filePathsql1 = `./autobackup/cpareport/report${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
+  var filePathsql2 = `./autobackup/rcmdb/bkrcm-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
   deleteOldfile(filePathsql1);
   deleteOldfile(filePathsql2);  
 
@@ -52,7 +53,7 @@ cron.schedule(JOB_SCHEDULE, () => {
       charset: "utf8",
     },
     //Your directory to save sql file
-    dumpToFile: `./backupBd0251/cpareport/report${moment().format( "YYYYMMDD" )}.sql`,
+    dumpToFile: `./autobackup/cpareport/report${moment().format( "YYYYMMDD" )}.sql`,
   });
 
   mysqldump({
@@ -64,14 +65,58 @@ cron.schedule(JOB_SCHEDULE, () => {
       charset: "utf8",
     },
     //Your directory to save sql file
-    dumpToFile: `./backupBd0251/mysqleclaim/bkrcm-${moment().format("YYYYMMDD")}.sql`,
+    dumpToFile: `./autobackup/rcmdb/bkrcm-${moment().format("YYYYMMDD")}.sql`,
   });
 
 });
 
+
+cron.schedule(JOB_SCHEDULE2, () => {// autobackup cpawebsite และ elcaim ทุกตี 3 ของวัน
+  function deleteOldfile(filePathsql){ // function delete file
+    try {
+      fs.unlinkSync(filePathsql);// ลบไฟล์ backup ตัวเดิมออก 
+      console.log('successfully deleted '+filePathsql);
+    }catch(error){
+    console.error('there was an error:', error.message);
+   }
+  }
+  function getLastWeeksDate() {// function getdate of lastweek 
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+  }
+  console.log(`Runtime ${moment().format("YYYYMMDD")}`);
+  var filePathsql1 = `./autobackup/cpawebsite/cpawebsitedb-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
+  var filePathsql2 = `./autobackup/eclaimrcm/eclaimrcmdb-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
+  deleteOldfile(filePathsql1);
+  deleteOldfile(filePathsql2);  
+
+  mysqldump({
+    connection: {
+      host: process.env.MYSQLCPAWEB_HOST,
+      user:process.env.MYSQLCPAWEB_USER,
+      password: process.env.MYSQLCPAWEB_PASSWORD,
+      database: process.env.MYSQLCPAWEB_DB,
+      charset: "utf8",
+    }, dumpToFile: `./autobackup/cpawebsite/cpawebsitedb-${moment().format( "YYYYMMDD" )}.sql`,
+  });
+
+  mysqldump({
+    connection: {
+      host: process.env.MYSQLECLAIM_HOST,
+      user:process.env.MYSQLECLAIM_USER,
+      password: process.env.MYSQLECLAIM_PASSWORD,
+      database: process.env.MYSQLECLAIM_DB,
+      charset: "utf8",
+    }, dumpToFile: `./autobackup/eclaimrcm/eclaimrcmdb-${moment().format( "YYYYMMDD" )}.sql`,
+  });
+
+});
+
+
+
 server.get("*", (req, res) => {
   //res.sendFile(`${__dirname}/dist/index.html`)
-  res.end(`Backup cpareport eclaim offline is started !!`);
+  res.end(`Backup cpareport eclaim rcm cpawebsite is running !!`);
 });
 
 server.listen(PORT, () => console.log(`sever started port: ${PORT} . `));

@@ -18,11 +18,10 @@ This's Example To Connect  2database Mysql For Dump Data and stucture Sql
     MYSQLRCM_DB=
     MYSQLRCM_PORT=3306
     
-2.Create Your Folder TO save .sql,Example in this project's The same Directory Create Folder backupBd0251 And 2 sub folder
-   2.1.cpareport 
-   2.2.mysqleclaim
-   3.npm i 
-   4.npm start
+2.Create Your Folder TO save .sql,Example in this project's The same Directory Create Folder autobackup And 4 sub folder
+   2.1. cpareport ,cpawebsite,eclaimrcmdb,rcmdb
+3.npm i 
+4.npm start
     
 ########## IF YOU WANT TO RUN THIS BACKUP AUTOMATICALLY EVERY START PC Install Pm2 And Set them See Below. ###########
     
