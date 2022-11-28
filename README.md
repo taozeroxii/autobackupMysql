@@ -17,6 +17,11 @@ This's Example To Connect  2database Mysql For Dump Data and stucture Sql
     MYSQLRCM_PASSWORD=
     MYSQLRCM_DB=
     MYSQLRCM_PORT=3306
+    #connection MYSQL CPAWEBSITE DB
+    MYSQLCPAWEB_HOST=      
+    MYSQLCPAWEB_USER=
+    MYSQLCPAWEB_PASSWORD=
+    MYSQLCPAWEB_DB=
     
 2.Create Your Folder TO save .sql,Example in this project's The same Directory Create Folder autobackup And 4 sub folder
    2.1. cpareport ,cpawebsite,eclaimrcmdb,rcmdb
