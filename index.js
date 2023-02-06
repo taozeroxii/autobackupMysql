@@ -40,10 +40,7 @@ cron.schedule(JOB_SCHEDULE, () => { // autobackup report และ rcm ทุก
   
   console.log(`Runtime ${moment().format("YYYYMMDD")}`);
   var filePathsql1 = `./autobackup/cpareport/report${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
-  var filePathsql2 = `./autobackup/rcmdb/bkrcm-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
   deleteOldfile(filePathsql1);
-  deleteOldfile(filePathsql2);  
-
   mysqldump({
     connection: {
       host: process.env.MYSQLRP_HOST,
@@ -55,19 +52,6 @@ cron.schedule(JOB_SCHEDULE, () => { // autobackup report และ rcm ทุก
     //Your directory to save sql file
     dumpToFile: `./autobackup/cpareport/report${moment().format( "YYYYMMDD" )}.sql`,
   });
-
-  mysqldump({
-    connection: {
-      host: process.env.MYSQLRCM_HOST,
-      user: process.env.MYSQLRCM_USER,
-      password: process.env.MYSQLRCM_PASSWORD,
-      database: process.env.MYSQLRCM_DB,
-      charset: "utf8",
-    },
-    //Your directory to save sql file
-    dumpToFile: `./autobackup/rcmdb/bkrcm-${moment().format("YYYYMMDD")}.sql`,
-  });
-
 });
 
 
@@ -86,7 +70,7 @@ cron.schedule(JOB_SCHEDULE2, () => {// autobackup cpawebsite และ elcaim �
   }
   console.log(`Runtime ${moment().format("YYYYMMDD")}`);
   var filePathsql1 = `./autobackup/cpawebsite/cpawebsitedb-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
-  var filePathsql2 = `./autobackup/eclaimrcmdb/eclaimrcmdb-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
+  var filePathsql2 = `./autobackup/m2cpa/m2-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`; 
   deleteOldfile(filePathsql1);
   deleteOldfile(filePathsql2);  
 
@@ -102,12 +86,12 @@ cron.schedule(JOB_SCHEDULE2, () => {// autobackup cpawebsite และ elcaim �
 
   mysqldump({
     connection: {
-      host: process.env.MYSQLECLAIM_HOST,
-      user:process.env.MYSQLECLAIM_USER,
-      password: process.env.MYSQLECLAIM_PASSWORD,
-      database: process.env.MYSQLECLAIM_DB,
+      host: process.env.MYSQLM2_HOST,
+      user:process.env.MYSQLM2_USER,
+      password: process.env.MYSQLM2_PASSWORD,
+      database: process.env.MYSQLM2_DB,
       charset: "utf8",
-    }, dumpToFile: `./autobackup/eclaimrcmdb/eclaimrcmdb-${moment().format( "YYYYMMDD" )}.sql`,
+    }, dumpToFile: `./autobackup/m2cpa/m2-${moment().format( "YYYYMMDD" )}.sql`,
   });
 
 });
