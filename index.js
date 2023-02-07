@@ -108,36 +108,42 @@ cron.schedule(JOB_SCHEDULE2, () => {
   });
 });
 
-// cron.schedule(JOB_SCHEDULE3, () => {
-//   function deleteOldfile(filePathsql){ // function delete file
-//     try {
-//       fs.unlinkSync(filePathsql);// ลบไฟล์ backup ตัวเดิมออก
-//       console.log('successfully deleted '+filePathsql);
-//     }catch(error){
-//     console.error('there was an error:', error.message);
-//    }
-//   }
+cron.schedule(JOB_SCHEDULE3, () => {
+  function deleteOldfile(filePathsql){ // function delete file
+    try {
+      fs.unlinkSync(filePathsql);// ลบไฟล์ backup ตัวเดิมออก
+      console.log('successfully deleted '+filePathsql);
+    }catch(error){
+    console.error('there was an error:', error.message);
+   }
+  }
 
-//   function getLastWeeksDate() {// function getdate of lastweek
-//     const now = new Date();
-//     return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
-//   }
+  function getLastWeeksDate() {// function getdate of lastweek
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+  }
 
-//   console.log(`Runtime ${moment().format("YYYYMMDD")}`);
-//   var filePathsql1 = `./autobackup/meeting/meeting${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`;
-//   deleteOldfile(filePathsql1);
-//   mysqldump({
-//     connection: {
-//       host: process.env.MYSQLCPAMT_HOST,
-//       user:process.env.MYSQLCPAMT_USER,
-//       password: process.env.MYSQLCPAMT_PASSWORD,
-//       database: process.env.MYSQLCPAMT_DB,
-//       charset: "utf8",
-//     },
-//     //Your directory to save sql file
-//     dumpToFile: `./autobackup/meeting/meeting${moment().format( "YYYYMMDD" )}.sql`,
-//   });
-// });
+  console.log(`Runtime ${moment().format("YYYYMMDD")}`);
+  var filePathsql1 = `./autobackup/meeting/meeting${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`;
+  deleteOldfile(filePathsql1);
+  mysqldump({
+    connection: {
+      host: process.env.MYSQLCPAMT_HOST,
+      user:process.env.MYSQLCPAMT_USER,
+      password: process.env.MYSQLCPAMT_PASSWORD,
+      database: process.env.MYSQLCPAMT_DB,
+      charset: "utf8",
+    },
+    //Your directory to save sql file
+    dumpToFile: `./autobackup/meeting/meeting${moment().format( "YYYYMMDD" )}.sql`,
+  });
+});
+
+
+
+
+
+
 
 
 server.get("*", (req, res) => {

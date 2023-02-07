@@ -4,6 +4,6 @@ module.exports = {
     // JOB_SCHEDULE: '40 * * * *'//ทุกนาทีที่ 40 
     JOB_SCHEDULE: '0 1 * * *', //every day 0 0 0 * * *
     JOB_SCHEDULE2: '0 3 * * *', 
-    JOB_SCHEDULE2: '0 4 * * *'
+    JOB_SCHEDULE3: '0 4 * * *'
   };
   
