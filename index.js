@@ -37,11 +37,12 @@ cron.schedule(JOB_SCHEDULE, () => {
     return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
   }
 
-  console.log(`Runtime ${moment().format("YYYYMMDD")}`);
+  console.log(`Runtime ${moment().format("YYYYMMDD")} 172.16.0.251`);
   var filePathsql1 = `./autobackup/cpareport/report${moment(
     getLastWeeksDate()
   ).format("YYYYMMDD")}.sql`;
   deleteOldfile(filePathsql1);
+
   mysqldump({
     connection: {
       host: process.env.MYSQLRP_HOST,
@@ -55,6 +56,8 @@ cron.schedule(JOB_SCHEDULE, () => {
       "YYYYMMDD"
     )}.sql`,
   });
+
+
 });
 
 cron.schedule(JOB_SCHEDULE2, () => {
@@ -73,15 +76,16 @@ cron.schedule(JOB_SCHEDULE2, () => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
   }
-  console.log(`Runtime ${moment().format("YYYYMMDD")}`);
+  console.log(`Runtime ${moment().format("YYYYMMDD")} 1.179.170.83`);
   var filePathsql1 = `./autobackup/cpawebsite/cpawebsitedb-${moment(
     getLastWeeksDate()
   ).format("YYYYMMDD")}.sql`;
-  var filePathsql2 = `./autobackup/m2cpa/m2-${moment(getLastWeeksDate()).format(
-    "YYYYMMDD"
-  )}.sql`;
+  var filePathsql2 = `./autobackup/m2cpa/m2-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`;
+  var filePathsql3 = `./autobackup/mcusystem/mcusystem-${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`;
+
   deleteOldfile(filePathsql1);
   deleteOldfile(filePathsql2);
+  deleteOldfile(filePathsql3);
 
   mysqldump({
     connection: {
@@ -106,6 +110,19 @@ cron.schedule(JOB_SCHEDULE2, () => {
     },
     dumpToFile: `./autobackup/m2cpa/m2-${moment().format("YYYYMMDD")}.sql`,
   });
+
+  mysqldump({
+    connection: {
+      host: process.env.MYSQLMCU_HOST,
+      user: process.env.MYSQLMCU_USER,
+      password: process.env.MYSQLMCU_PASSWORD,
+      database: process.env.MYSQLMCU_DB,
+      charset: "utf8",
+    },
+    //Your directory to save sql file
+    dumpToFile: `./autobackup/mcusystem/mcusystem-${moment().format( "YYYYMMDD" )}.sql`,
+  });
+
 });
 
 cron.schedule(JOB_SCHEDULE3, () => {
@@ -117,13 +134,11 @@ cron.schedule(JOB_SCHEDULE3, () => {
     console.error('there was an error:', error.message);
    }
   }
-
   function getLastWeeksDate() {// function getdate of lastweek
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
   }
-
-  console.log(`Runtime ${moment().format("YYYYMMDD")}`);
+  console.log(`Runtime ${moment().format("YYYYMMDD")} meeting db`);
   var filePathsql1 = `./autobackup/meeting/meeting${moment(getLastWeeksDate()).format("YYYYMMDD")}.sql`;
   deleteOldfile(filePathsql1);
   mysqldump({
@@ -138,11 +153,6 @@ cron.schedule(JOB_SCHEDULE3, () => {
     dumpToFile: `./autobackup/meeting/meeting${moment().format( "YYYYMMDD" )}.sql`,
   });
 });
-
-
-
-
-
 
 
 
